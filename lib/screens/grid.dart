@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/row.dart';
+import 'package:tic_tac_toe/screens/row.dart';
 
 class Grid extends StatefulWidget {
   final int maxRows;

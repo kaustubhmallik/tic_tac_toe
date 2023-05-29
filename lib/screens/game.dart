@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/grid.dart';
+import 'package:tic_tac_toe/screens/grid.dart';
 
 class Game extends StatefulWidget {
   const Game({super.key, required this.title});

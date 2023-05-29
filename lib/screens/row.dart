@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/tile.dart';
+import 'package:tic_tac_toe/screens/tile.dart';
 
 class GridRow extends StatefulWidget {
   final int index;
