@@ -20,7 +20,7 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    var state = context.watch<GameModel>();
+    var gameState = context.watch<GameModel>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -29,11 +29,21 @@ class _GameState extends State<Game> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Grid(numRows, _padding, state.isRedTurn),
+          Grid(numRows, _padding, gameState.isRedTurn),
+          gameState.isComplete()
+              ? const SizedBox(height: 40)
+              : const SizedBox(),
+          gameState.isComplete()
+              ? ElevatedCard(gameState.gameSummary())
+              : const SizedBox(),
           const SizedBox(height: 40),
-          state.isComplete()
-              ? ElevatedCard(state.gameSummary())
-              : const Text(''),
+          ElevatedButton(
+            onPressed: () {
+              gameState.reset();
+            },
+            child:
+                Text(gameState.isComplete() ? 'Play Again?' : 'Restart Game?'),
+          )
         ],
       ),
     );

@@ -14,36 +14,38 @@ class Tile extends StatefulWidget {
 }
 
 class _TileState extends State<Tile> {
-  bool _played = false;
-  Color _backgroundColor = Colors.white;
-
   tilePlayed(GameModel game) {
-    if (!_played) {
-      setState(() {
-        if (game.isRedTurn) {
-          _backgroundColor = Colors.red;
-        } else {
-          _backgroundColor = Colors.blue;
-        }
-        _played = true;
-        game.play(widget.row, widget.col);
-      });
+    if (!game.isTilePlayed(widget.row, widget.col)) {
+      game.play(widget.row, widget.col);
     }
   }
 
-  bool tileInactive(GameModel game) => _played || game.isComplete();
+  bool isTileInactive(GameModel game) =>
+      game.isTilePlayed(widget.row, widget.col) || game.isComplete();
+
+  Color calculateBackgroundColor(GameModel game) {
+    final player = game.tilePlayedBy(widget.row, widget.col);
+    switch (player) {
+      case Player.red:
+        return Colors.red;
+      case Player.blue:
+        return Colors.blue;
+      default:
+        return Colors.white;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<GameModel>(
       builder: (context, game, child) => OutlinedButton(
-        onPressed: tileInactive(game) ? () {} : () => tilePlayed(game),
+        onPressed: isTileInactive(game) ? () {} : () => tilePlayed(game),
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(80, 80),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          backgroundColor: _backgroundColor,
+          backgroundColor: calculateBackgroundColor(game),
         ),
         child: const Text(''),
       ),
