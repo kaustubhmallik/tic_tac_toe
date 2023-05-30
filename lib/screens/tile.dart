@@ -25,17 +25,19 @@ class _TileState extends State<Tile> {
         } else {
           _backgroundColor = Colors.blue;
         }
-        // _played = true;
+        _played = true;
         game.play(widget.row, widget.col);
       });
     }
   }
 
+  bool tileInactive(GameModel game) => _played || game.isComplete();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GameModel>(
       builder: (context, game, child) => OutlinedButton(
-        onPressed: _played ? null : () => tilePlayed(game),
+        onPressed: tileInactive(game) ? () {} : () => tilePlayed(game),
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(80, 80),
           shape: RoundedRectangleBorder(

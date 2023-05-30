@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         title: 'Tic Tac Toe',
         theme: appTheme,
         home: ChangeNotifierProvider(
-          create: (context) => GameModel(),
+          create: (context) => GameModel(3, 3),
           child: const Game(title: 'Tic-Tac-Toe'),
         ));
   }

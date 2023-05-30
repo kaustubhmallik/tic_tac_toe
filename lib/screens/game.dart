@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/models/game.dart';
 import 'package:tic_tac_toe/screens/grid.dart';
 
+import 'card.dart';
+
 class Game extends StatefulWidget {
   const Game({super.key, required this.title});
 
@@ -24,7 +26,16 @@ class _GameState extends State<Game> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Center(child: Text(widget.title)),
       ),
-      body: Grid(numRows, _padding, state.isRedTurn),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Grid(numRows, _padding, state.isRedTurn),
+          const SizedBox(height: 40),
+          state.isComplete()
+              ? ElevatedCard(state.gameSummary())
+              : const Text(''),
+        ],
+      ),
     );
   }
 }
