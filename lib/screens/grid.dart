@@ -4,8 +4,10 @@ import 'package:tic_tac_toe/screens/row.dart';
 class Grid extends StatefulWidget {
   final int maxRows;
   final double padding;
+  final bool isRedTurn;
 
-  const Grid(this.maxRows, this.padding, {Key? key}) : super(key: key);
+  const Grid(this.maxRows, this.padding, this.isRedTurn, {Key? key})
+      : super(key: key);
 
   @override
   State<Grid> createState() => _GridState();
@@ -17,7 +19,7 @@ class _GridState extends State<Grid> {
     final padding = widget.padding;
     var rows = <Widget>[];
     for (var i = 0; i < widget.maxRows; i++) {
-      rows.add(GridRow(i, widget.maxRows, padding));
+      rows.add(GridRow(i, widget.maxRows, padding, widget.isRedTurn));
       if (i < widget.maxRows - 1) {
         rows.add(SizedBox(
           height: padding,

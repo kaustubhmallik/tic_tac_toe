@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/models/game.dart';
 
 class Tile extends StatefulWidget {
   final int row;
   final int col;
+  final bool isRedTurn;
 
-  const Tile(this.row, this.col, {super.key});
+  const Tile(this.row, this.col, this.isRedTurn, {super.key});
 
   @override
   State<Tile> createState() => _TileState();
@@ -12,27 +15,36 @@ class Tile extends StatefulWidget {
 
 class _TileState extends State<Tile> {
   bool _played = false;
+  Color _backgroundColor = Colors.white;
 
-  tilePlayed() {
+  tilePlayed(GameModel game) {
     if (!_played) {
-      print('row: ${widget.row}, col: ${widget.col}');
       setState(() {
-        _played = true;
+        if (game.isRedTurn) {
+          _backgroundColor = Colors.red;
+        } else {
+          _backgroundColor = Colors.blue;
+        }
+        // _played = true;
+        game.play(widget.row, widget.col);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: _played ? null : tilePlayed,
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size(80, 80),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+    return Consumer<GameModel>(
+      builder: (context, game, child) => OutlinedButton(
+        onPressed: _played ? null : () => tilePlayed(game),
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(80, 80),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          backgroundColor: _backgroundColor,
         ),
+        child: const Text(''),
       ),
-      child: const Text(''),
     );
   }
 }

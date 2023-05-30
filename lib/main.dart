@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/common/theme.dart';
 
+import 'models/game.dart';
 import 'screens/game.dart';
 
 void main() {
@@ -14,9 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tic Tac Toe',
-      theme: appTheme,
-      home: const Game(title: 'Tic-Tac-Toe'),
-    );
+        title: 'Tic Tac Toe',
+        theme: appTheme,
+        home: ChangeNotifierProvider(
+          create: (context) => GameModel(),
+          child: const Game(title: 'Tic-Tac-Toe'),
+        ));
   }
 }

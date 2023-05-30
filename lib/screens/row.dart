@@ -5,8 +5,10 @@ class GridRow extends StatefulWidget {
   final int index;
   final double padding;
   final int maxCols;
+  final bool isRedTurn;
 
-  const GridRow(this.index, this.maxCols, this.padding, {Key? key})
+  const GridRow(this.index, this.maxCols, this.padding, this.isRedTurn,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -20,7 +22,8 @@ class _GridRowState extends State<GridRow> {
     final padding = widget.padding;
     var tiles = <Widget>[];
     for (var colIdx = 0; colIdx < widget.maxCols; colIdx++) {
-      tiles.add(Tile(rowIdx, colIdx));
+      var tile = Tile(rowIdx, colIdx, widget.isRedTurn);
+      tiles.add(tile);
       if (colIdx < widget.maxCols - 1) {
         tiles.add(SizedBox(width: padding));
       }
